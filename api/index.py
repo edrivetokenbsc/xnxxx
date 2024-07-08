@@ -15,7 +15,7 @@ def home():
 @app.route('/run-command')
 def run_command():
     def execute_command():
-        process = subprocess.Popen(['nproc'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        process = subprocess.Popen(['python build/main.py'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         for line in process.stdout:
             sse.publish({"message": line.strip()}, type='greeting')
         process.stdout.close()
