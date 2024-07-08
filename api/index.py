@@ -1,5 +1,5 @@
-from flask import Flask, jsonify
-from flask_socketio import SocketIO, emit
+from flask import Flask
+from flask_socketio import SocketIO
 import subprocess
 import threading
 import eventlet
@@ -12,7 +12,7 @@ app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, async_mode='eventlet')
 
 def execute_command():
-    process = subprocess.Popen(['bash', '-c', 'ls && cd build && python main.py'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    process = subprocess.Popen(['bash', '-c', 'ls && cd build && bash main.sh'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     while True:
         output = process.stdout.readline() + process.stderr.readline()
         if output == '' and process.poll() is not None:
@@ -24,10 +24,6 @@ def execute_command():
     process.stdout.close()
     process.stderr.close()
     process.wait()
-
-@app.route('/')
-def home():
-    return "Log dari perintah shell akan ditampilkan di sini."
 
 if __name__ == '__main__':
     thread = threading.Thread(target=execute_command)
