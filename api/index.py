@@ -1,18 +1,19 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template
+from flask_socketio import SocketIO, emit
 import subprocess
 import threading
-import time
+import eventlet
+
+eventlet.monkey_patch()
 
 app = Flask(__name__)
-
-logs = []
+app.config['SECRET_KEY'] = 'secret!'
+socketio = SocketIO(app, async_mode='eventlet')
 
 def execute_command():
-    global logs
     process = subprocess.Popen(['python', 'build/main.py'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    logs = []
     for line in process.stdout:
-        logs.append(line.strip())
+        socketio.emit('log', {'message': line.strip()})
     process.stdout.close()
     process.wait()
 
@@ -26,9 +27,5 @@ def run_command():
     thread.start()
     return "Command is running..."
 
-@app.route('/logs')
-def get_logs():
-    return jsonify(logs)
-
 if __name__ == '__main__':
-    app.run(debug=True, threaded=True)
+    socketio.run(app, debug=True, threaded=True)
