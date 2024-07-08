@@ -15,21 +15,18 @@
 
         function runCommand() {
             fetch('/run-command');
+            logElement.innerText = '';
+            startPolling();
         }
 
-        if (typeof(EventSource) !== "undefined") {
-            const source = new EventSource("/stream");
-
-            source.onmessage = function(event) {
-                const data = JSON.parse(event.data);
-                logElement.innerText += data.message + "\n";
-            };
-
-            source.onerror = function(event) {
-                console.error("EventSource failed:", event);
-            };
-        } else {
-            logElement.innerText = "Sorry, your browser does not support server-sent events...";
+        function startPolling() {
+            setInterval(() => {
+                fetch('/logs')
+                    .then(response => response.json())
+                    .then(data => {
+                        logElement.innerText = data.join("\n");
+                    });
+            }, 1000);
         }
     </script>
 </body>
