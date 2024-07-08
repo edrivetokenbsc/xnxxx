@@ -1,1 +1,3 @@
 Flask==3.0.3
+flask-sse==0.2.1
+eventlet==0.30.2
