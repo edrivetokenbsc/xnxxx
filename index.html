@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Command Log</title>
+    <style>
+        .log-success { color: green; }
+        .log-error { color: red; }
+    </style>
 </head>
 <body>
     <h1>Live Command Log</h1>
@@ -15,7 +19,10 @@
         const socket = io();
 
         socket.on('log', function(data) {
-            logElement.innerText += data.message + "\n";
+            const logMessage = document.createElement('div');
+            logMessage.textContent = data.message;
+            logMessage.className = data.type === 'error' ? 'log-error' : 'log-success';
+            logElement.appendChild(logMessage);
         });
     </script>
 </body>
