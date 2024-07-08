@@ -11,10 +11,13 @@ app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, async_mode='eventlet')
 
 def execute_command():
-    process = subprocess.Popen(['python', 'build/main.py'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    process = subprocess.Popen(['bash', '-c', 'ls && cd build && python main.py'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     for line in process.stdout:
-        socketio.emit('log', {'message': line.strip()}, broadcast=True)
+        socketio.emit('log', {'message': line.strip(), 'type': 'success'}, broadcast=True)
+    for line in process.stderr:
+        socketio.emit('log', {'message': line.strip(), 'type': 'error'}, broadcast=True)
     process.stdout.close()
+    process.stderr.close()
     process.wait()
 
 @app.route('/')
