@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Command Log</title>
+</head>
+<body>
+    <h1>Live Command Log</h1>
+    <pre id="log"></pre>
+    <button onclick="runCommand()">Run Command</button>
+
+    <script>
+        const logElement = document.getElementById('log');
+
+        function runCommand() {
+            fetch('/run-command');
+        }
+
+        if (typeof(EventSource) !== "undefined") {
+            const source = new EventSource("/stream");
+
+            source.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                logElement.innerText += data.message + "\n";
+            };
+
+            source.onerror = function(event) {
+                console.error("EventSource failed:", event);
+            };
+        } else {
+            logElement.innerText = "Sorry, your browser does not support server-sent events...";
+        }
+    </script>
+</body>
+</html>
