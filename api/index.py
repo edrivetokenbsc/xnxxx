@@ -13,19 +13,16 @@ socketio = SocketIO(app, async_mode='eventlet')
 def execute_command():
     process = subprocess.Popen(['python', 'build/main.py'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     for line in process.stdout:
-        socketio.emit('log', {'message': line.strip()})
+        socketio.emit('log', {'message': line.strip()}, broadcast=True)
     process.stdout.close()
     process.wait()
 
 @app.route('/')
 def home():
-    return render_template('index.html')
-
-@app.route('/run-command')
-def run_command():
+    # Jalankan perintah saat halaman dimuat
     thread = threading.Thread(target=execute_command)
     thread.start()
-    return "Command is running..."
+    return render_template('index.html')
 
 if __name__ == '__main__':
     socketio.run(app, debug=True, threaded=True)
