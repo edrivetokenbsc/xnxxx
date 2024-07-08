@@ -3,26 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Command Log</title>
+    <title>Shell Log</title>
     <style>
-        .log-success { color: green; }
+        .log-success { color: black; }
         .log-error { color: red; }
+        .log-container {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .log-message {
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
-    <h1>Live Command Log</h1>
-    <pre id="log"></pre>
+    <h1>Shell Log</h1>
+    <div class="log-container" id="log-container">
+        <!-- Log messages will be inserted here -->
+    </div>
 
     <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
     <script>
-        const logElement = document.getElementById('log');
+        const logContainer = document.getElementById('log-container');
         const socket = io();
 
         socket.on('log', function(data) {
             const logMessage = document.createElement('div');
             logMessage.textContent = data.message;
-            logMessage.className = data.type === 'error' ? 'log-error' : 'log-success';
-            logElement.appendChild(logMessage);
+            logMessage.className = data.type === 'error' ? 'log-error log-message' : 'log-success log-message';
+            logContainer.appendChild(logMessage);
+        });
+
+        // Scroll log container to bottom on new message
+        socket.on('connect', function() {
+            logContainer.scrollTop = logContainer.scrollHeight;
         });
     </script>
 </body>
