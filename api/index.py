@@ -1,31 +1,28 @@
-from flask import Flask
-from flask_socketio import SocketIO
+from flask import Flask, jsonify
 import subprocess
-import threading
-import eventlet
-import re
-
-eventlet.monkey_patch()
+import logging
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app, async_mode='eventlet')
 
-def execute_command():
-    process = subprocess.Popen(['bash', '-c', 'ls && cd build && bash main.sh'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    while True:
-        output = process.stdout.readline() + process.stderr.readline()
-        if output == '' and process.poll() is not None:
-            break
-        if output:
-            log_type = 'error' if re.search(r'\bERROR\b|\bTraceback\b', output) else 'success'
-            socketio.emit('log', {'message': output.strip(), 'type': log_type}, broadcast=True)
+# Konfigurasi logging
+logging.basicConfig(filename='command_output.log', level=logging.INFO, format='%(asctime)s - %(message)s')
 
-    process.stdout.close()
-    process.stderr.close()
-    process.wait()
+@app.route('/')
+def run_command():
+    # Perintah bash yang ingin dijalankan
+    bash_command = 'cd build && bash main.sh'
+    
+    # Jalankan perintah bash
+    result = subprocess.run(bash_command, shell=True, capture_output=True, text=True)
+    
+    # Tulis output dan error ke file log
+    logging.info(result.stdout)
+    logging.error(result.stderr)
+    
+    # Gabungkan stdout dan stderr untuk ditampilkan di web
+    combined_output = result.stdout + result.stderr
+    
+    return combined_output
 
 if __name__ == '__main__':
-    thread = threading.Thread(target=execute_command)
-    thread.start()
-    socketio.run(app, debug=True, threaded=True)
+    app.run(debug=True)
