@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, jsonify
 from flask_socketio import SocketIO, emit
 import subprocess
 import threading
@@ -27,9 +27,9 @@ def execute_command():
 
 @app.route('/')
 def home():
-    thread = threading.Thread(target=execute_command)
-    thread.start()
-    return render_template('index.html')
+    return "Log dari perintah shell akan ditampilkan di sini."
 
 if __name__ == '__main__':
+    thread = threading.Thread(target=execute_command)
+    thread.start()
     socketio.run(app, debug=True, threaded=True)
