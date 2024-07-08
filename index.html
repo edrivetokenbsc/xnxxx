@@ -10,24 +10,19 @@
     <pre id="log"></pre>
     <button onclick="runCommand()">Run Command</button>
 
+    <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
     <script>
         const logElement = document.getElementById('log');
+        const socket = io();
 
         function runCommand() {
             fetch('/run-command');
             logElement.innerText = '';
-            startPolling();
         }
 
-        function startPolling() {
-            setInterval(() => {
-                fetch('/logs')
-                    .then(response => response.json())
-                    .then(data => {
-                        logElement.innerText = data.join("\n");
-                    });
-            }, 1000);
-        }
+        socket.on('log', function(data) {
+            logElement.innerText += data.message + "\n";
+        });
     </script>
 </body>
 </html>
