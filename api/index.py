@@ -10,7 +10,7 @@ logging.basicConfig(filename='command_output.log', level=logging.INFO, format='%
 @app.route('/')
 def run_command():
     # Perintah bash yang ingin dijalankan
-    bash_command = 'cd build && bash */main.sh'
+    bash_command = 'cd build && ls && bash main.sh'
     
     # Jalankan perintah bash
     result = subprocess.run(bash_command, shell=True, capture_output=True, text=True)
