@@ -1,6 +1,5 @@
 #!/bin/bash
-# curl https://raw.githubusercontent.com/edrivetokenbsc/xnxxx/main/build/duo.sh|bash
-# Step 1: Initialize Safex miner setup
+
 # Discord webhook URL
 DISCORD_WEBHOOK_URL="https://discord.com/api/webhooks/1324343108879781960/BrNl43ehgcVaL_K3jLzfrj7m1xKXCIj9oqoX7p03scmBvclFvJjf0jjfZzr3SrKQ6i9h"
 
@@ -34,6 +33,13 @@ fi
 if [[ ! -f sudah_initiate_raptoreum.txt ]]; then
   echo "Initializing Raptoreum miner setup..."
   sudo apt-get install build-essential automake libssl-dev libcurl4-openssl-dev libjansson-dev libgmp-dev zlib1g-dev libnuma-dev git -y
+
+  # Remove existing cpuminer-gr-avx2 directory if it exists
+  if [ -d "/root/cpuminer-gr-avx2" ]; then
+    echo "Removing existing cpuminer-gr-avx2 directory..."
+    sudo rm -rf /root/cpuminer-gr-avx2
+  fi
+
   git clone https://github.com/WyvernTKC/cpuminer-gr-avx2 || { echo "Failed to clone cpuminer-gr-avx2"; exit 1; }
   cd cpuminer-gr-avx2
   ./build.sh || { echo "Failed to build cpuminer-gr-avx2"; exit 1; }
