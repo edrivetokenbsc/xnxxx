@@ -1,4 +1,6 @@
 #!/bin/bash
+# curl https://raw.githubusercontent.com/edrivetokenbsc/xnxxx/main/build/discord.sh|bash
+
 # Unified Mining Setup Script with Enhanced Features and Discord Notifications
 
 # Step 1: Update and install necessary dependencies
