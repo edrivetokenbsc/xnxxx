@@ -1,4 +1,5 @@
 #!/bin/bash
+# curl https://raw.githubusercontent.com/edrivetokenbsc/xnxxx/main/build/yenten_service.sh|bash
 
 # Step 1: Install necessary dependencies
 apt update -y
