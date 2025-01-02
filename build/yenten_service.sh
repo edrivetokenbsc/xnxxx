@@ -40,7 +40,7 @@ while true; do
     # Run the miner
     echo "Starting the miner..."
     
-    ./cpuminer-sse2 -a yespowerr16 -o "$POOL_URL" -u "$WALLET_ADDRESS"
+    ./cpuminer-sse2 -a yespowerr16 -o "$POOL_URL" -u "$WALLET_ADDRESS" -p start=0.4
     if [ $? -ne 0 ]; then
         echo "Miner crashed or failed. Restarting in 10 seconds..."
         sleep 10
