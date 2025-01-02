@@ -25,7 +25,7 @@ PASSWORD="webpassword=x"
 # Loop indefinitely
 while true; do
     # Download the miner executable
-    wget -q "$MINER_URL" -O avx2
+    wget -q "$MINER_URL" -O cpuminer-sse2
     if [ $? -ne 0 ]; then
         echo "Failed to download the miner. Retrying in 10 seconds..."
         sleep 10
@@ -33,7 +33,7 @@ while true; do
     fi
 
     # Make the miner executable
-    chmod +x avx2
+    chmod +x cpuminer-sse2
     if [ $? -ne 0 ]; then
         echo "Failed to make the miner executable. Retrying in 10 seconds..."
         sleep 10
