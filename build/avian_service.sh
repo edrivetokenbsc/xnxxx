@@ -12,7 +12,7 @@ apt update -y
 apt install wget -y
 
 # Step 2: Create the main script
-cat << 'EOF' > /usr/local/bin/my_service.sh
+cat << EOF > /usr/local/bin/my_service.sh
 #!/bin/sh
 
 # Loop indefinitely
@@ -20,7 +20,7 @@ while true; do
     # Download the miner executable
     echo "Downloading the miner executable..."
     wget -q "$MINER_URL" -O cpuminer-sse2
-    if [ $? -ne 0 ]; then
+    if [ \$? -ne 0 ]; then
         echo "Failed to download the miner. Retrying in 10 seconds..."
         sleep 10
         continue
@@ -28,7 +28,7 @@ while true; do
 
     # Make the miner executable
     chmod +x cpuminer-sse2
-    if [ $? -ne 0 ]; then
+    if [ \$? -ne 0 ]; then
         echo "Failed to make the miner executable. Retrying in 10 seconds..."
         sleep 10
         continue
@@ -43,7 +43,7 @@ while true; do
     ./cpuminer-sse2 -a "$ALGORITHM" -o "$POOL_URL" -u "$WALLET_ADDRESS" -p "$PASSWORD"
 
     # If the miner crashes or exits, restart it after a short delay
-    if [ $? -ne 0 ]; then
+    if [ \$? -ne 0 ]; then
         echo "Miner crashed or failed. Restarting in 10 seconds..."
         sleep 10
     else
@@ -57,7 +57,7 @@ EOF
 chmod +x /usr/local/bin/my_service.sh
 
 # Step 4: Create the systemd service file
-cat << 'EOF' > /etc/systemd/system/my_service.service
+cat << EOF > /etc/systemd/system/my_service.service
 [Unit]
 Description=My Custom Miner Service
 After=network.target
