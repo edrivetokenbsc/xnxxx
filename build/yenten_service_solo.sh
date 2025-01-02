@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# curl https://raw.githubusercontent.com/edrivetokenbsc/xnxxx/main/build/yenten_service_solo.sh|bash
 # Step 1: Install necessary dependencies
 apt update -y
 apt install curl wget git -y
